@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import type PetType from '../types/pet.type.js';
+import SpeciesEnum from '../enums/species.enum.js';
 
 const petList: PetType[] = [];
 
@@ -10,6 +11,11 @@ export default class PetController {
 
   createPet(req: Request, res: Response) {
     const { id, name, age, species, adopted } = req.body;
+
+    if (!Object.values(SpeciesEnum).includes(species)) {
+      return res.status(400).json({ message: 'espécie inválida' });
+    }
+
     const newPet: PetType = { id, name, age, species, adopted };
     petList.push(newPet);
 
