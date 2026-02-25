@@ -3,7 +3,7 @@ import SpeciesEnum from '../enums/species.enum.js';
 type PetType = {
   id: number;
   name: string;
-  age: number;
+  birth: Date;
   species: SpeciesEnum;
   adopted: boolean;
 };

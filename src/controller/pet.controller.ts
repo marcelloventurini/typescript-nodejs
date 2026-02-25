@@ -16,13 +16,13 @@ export default class PetController {
   }
 
   createPet(req: Request, res: Response) {
-    const { name, age, species, adopted } = req.body;
+    const { name, birth, species, adopted } = req.body;
 
     if (!Object.values(SpeciesEnum).includes(species)) {
       return res.status(400).json({ message: 'espécie inválida' });
     }
 
-    const newPet: PetType = { id: generateId(), name, age, species, adopted };
+    const newPet: PetType = { id: generateId(), name, birth, species, adopted };
     petList.push(newPet);
 
     return res.status(201).json(newPet);
@@ -30,7 +30,7 @@ export default class PetController {
 
   updatePet(req: Request, res: Response) {
     const { id } = req.params;
-    const { name, age, species, adopted } = req.body;
+    const { name, birth, species, adopted } = req.body;
     const pet = petList.find((pet) => pet.id === Number(id));
 
     if (!pet) {
@@ -38,7 +38,7 @@ export default class PetController {
     }
 
     pet.name = name;
-    pet.age = age;
+    pet.birth = birth;
     pet.species = species;
     pet.adopted = adopted;
     return res.status(200).json(pet);
