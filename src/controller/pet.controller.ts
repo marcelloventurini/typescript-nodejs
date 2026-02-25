@@ -4,6 +4,10 @@ import type PetType from '../types/pet.type.js';
 const petList: PetType[] = [];
 
 export default class PetController {
+  getPets(req: Request, res: Response) {
+    return res.status(200).json(petList);
+  }
+
   createPet(req: Request, res: Response) {
     const { id, name, age, species, adopted } = req.body;
     const newPet: PetType = { id, name, age, species, adopted };
