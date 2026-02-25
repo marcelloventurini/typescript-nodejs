@@ -1,8 +1,14 @@
 import type { Request, Response } from 'express';
-import type PetType from '../types/pet.type.js';
 import SpeciesEnum from '../enums/species.enum.js';
+import type PetType from '../types/pet.type.js';
 
 const petList: PetType[] = [];
+
+let id = 0;
+function generateId() {
+  id += 1;
+  return id;
+}
 
 export default class PetController {
   getPets(req: Request, res: Response) {
@@ -10,13 +16,13 @@ export default class PetController {
   }
 
   createPet(req: Request, res: Response) {
-    const { id, name, age, species, adopted } = req.body;
+    const { name, age, species, adopted } = req.body;
 
     if (!Object.values(SpeciesEnum).includes(species)) {
       return res.status(400).json({ message: 'espécie inválida' });
     }
 
-    const newPet: PetType = { id, name, age, species, adopted };
+    const newPet: PetType = { id: generateId(), name, age, species, adopted };
     petList.push(newPet);
 
     return res.status(201).json(newPet);
