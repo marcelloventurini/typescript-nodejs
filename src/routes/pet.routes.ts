@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.post('/pets', petController.createPet);
 router.get('/pets', petController.getPets);
+router.put('/pets/:id', petController.updatePet);
 
 export default router;

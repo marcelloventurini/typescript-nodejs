@@ -15,4 +15,20 @@ export default class PetController {
 
     return res.status(201).json(newPet);
   }
+
+  updatePet(req: Request, res: Response) {
+    const { id } = req.params;
+    const { name, age, species, adopted } = req.body;
+    const pet = petList.find((pet) => pet.id === Number(id));
+
+    if (!pet) {
+      return res.status(404).json({ message: 'pet não encontrado' });
+    }
+
+    pet.name = name;
+    pet.age = age;
+    pet.species = species;
+    pet.adopted = adopted;
+    return res.status(200).json(pet);
+  }
 }
