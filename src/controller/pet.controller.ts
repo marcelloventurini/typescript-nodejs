@@ -9,13 +9,14 @@ function generateId() {
   id += 1;
   return id;
 }
+// request<params, resBody, reqBody, reqQuery>
 
 export default class PetController {
   getPets(req: Request, res: Response) {
     return res.status(200).json(petList);
   }
 
-  createPet(req: Request, res: Response) {
+  createPet(req: Request<{}, {}, PetType>, res: Response) {
     const { name, birth, species, adopted } = req.body;
 
     if (!Object.values(SpeciesEnum).includes(species)) {
@@ -28,7 +29,7 @@ export default class PetController {
     return res.status(201).json(newPet);
   }
 
-  updatePet(req: Request, res: Response) {
+  updatePet(req: Request<{ id: string }, {}, PetType>, res: Response) {
     const { id } = req.params;
     const { name, birth, species, adopted } = req.body;
     const pet = petList.find((pet) => pet.id === Number(id));
@@ -41,10 +42,11 @@ export default class PetController {
     pet.birth = birth;
     pet.species = species;
     pet.adopted = adopted;
+
     return res.status(200).json(pet);
   }
 
-  deletePet(req: Request, res: Response) {
+  deletePet(req: Request<{ id: string }>, res: Response) {
     const { id } = req.params;
     const pet = petList.find((pet) => pet.id === Number(id));
 
