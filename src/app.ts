@@ -1,5 +1,5 @@
-import express, { type Response } from 'express';
 import 'reflect-metadata';
+import express, { type Response } from 'express';
 import { AppDataSource } from './config/data-source.js';
 import router from './routes/index.js';
 

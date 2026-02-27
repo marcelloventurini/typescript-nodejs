@@ -2,15 +2,15 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import SpeciesEnum from '../enums/species.enum.js';
 
 @Entity()
-export default class Pet {
+export class Pet {
   @PrimaryGeneratedColumn()
   id!: number;
-  @Column()
+  @Column({ type: 'varchar' })
   name!: string;
-  @Column()
+  @Column({ type: 'varchar' })
   species!: SpeciesEnum;
-  @Column()
+  @Column({ type: 'datetime' })
   birthDate!: Date;
-  @Column()
+  @Column({ type: 'boolean' })
   adopted!: boolean;
 }
