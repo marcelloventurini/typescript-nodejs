@@ -9,16 +9,19 @@ export class PetRepositoryImpl implements PetRepository {
     this.repository = repository;
   }
 
-  getPets(): Pet[] {
+  async getPets(): Promise<Pet[]> {
     throw new Error('Method not implemented.');
   }
-  createPet(pet: Pet): void {
-    this.repository.save(pet);
+
+  async createPet(pet: Pet): Promise<void> {
+    await this.repository.save(pet);
   }
-  updatePet(id: number, pet: Pet): void {
+
+  async updatePet(id: number, pet: Pet): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  deletePet(id: number): void {
+
+  async deletePet(id: number): Promise<void> {
     throw new Error('Method not implemented.');
   }
 }
