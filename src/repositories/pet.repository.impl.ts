@@ -10,7 +10,7 @@ export class PetRepositoryImpl implements PetRepository {
   }
 
   async getPets(): Promise<Pet[]> {
-    throw new Error('Method not implemented.');
+    return await this.repository.find();
   }
 
   async createPet(pet: Pet): Promise<void> {

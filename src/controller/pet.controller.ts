@@ -15,8 +15,9 @@ function generateId() {
 export default class PetController {
   constructor(private repository: PetRepository) {}
 
-  getPets(_: Request, res: Response) {
-    return res.status(200).json(petList);
+  async getPets(_: Request, res: Response) {
+    const pets = await this.repository.getPets();
+    return res.status(200).json(pets);
   }
 
   createPet(req: Request<{}, {}, Pet>, res: Response) {
