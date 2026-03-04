@@ -20,7 +20,7 @@ export default class PetController {
     return res.status(200).json(pets);
   }
 
-  createPet(req: Request<{}, {}, Pet>, res: Response) {
+  async createPet(req: Request<{}, {}, Pet>, res: Response) {
     const { name, birthDate, species, adopted } = req.body;
 
     if (!Object.values(SpeciesEnum).includes(species)) {
@@ -34,7 +34,7 @@ export default class PetController {
     newPet.species = species;
     newPet.adopted = adopted;
 
-    this.repository.createPet(newPet);
+    await this.repository.createPet(newPet);
 
     return res.status(201).json(newPet);
   }
