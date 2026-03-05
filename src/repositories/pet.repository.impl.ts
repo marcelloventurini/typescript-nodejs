@@ -26,6 +26,6 @@ export class PetRepositoryImpl implements PetRepository {
   }
 
   async deletePet(id: number): Promise<void> {
-    throw new Error('Method not implemented.');
+    await this.repository.delete(id);
   }
 }
