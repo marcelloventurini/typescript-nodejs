@@ -39,10 +39,10 @@ export default class PetController {
     return res.status(201).json(newPet);
   }
 
-  updatePet(req: Request<{ id: string }, {}, Pet>, res: Response) {
+  async updatePet(req: Request<{ id: string }, {}, Pet>, res: Response) {
     const { id } = req.params;
     const { name, birthDate, species, adopted } = req.body;
-    const pet = petList.find((pet) => pet.id === Number(id));
+    const pet = await this.repository.getPetById(Number(id));
 
     if (!pet) {
       return res.status(404).json({ message: 'pet não encontrado' });
@@ -52,6 +52,8 @@ export default class PetController {
     pet.birthDate = birthDate;
     pet.species = species;
     pet.adopted = adopted;
+
+    await this.repository.updatePet(Number(id), pet);
 
     return res.status(200).json(pet);
   }
