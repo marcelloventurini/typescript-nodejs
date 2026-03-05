@@ -20,6 +20,17 @@ export default class PetController {
     return res.status(200).json(pets);
   }
 
+  async getPetById(req: Request<{ id: string }>, res: Response) {
+    const { id } = req.params;
+    const pet = await this.repository.getPetById(Number(id));
+
+    if (!pet) {
+      return res.status(404).json({ message: 'pet não encontrado' });
+    }
+
+    return res.status(200).json(pet);
+  }
+
   async createPet(req: Request<{}, {}, Pet>, res: Response) {
     const { name, birthDate, species, adopted } = req.body;
 
