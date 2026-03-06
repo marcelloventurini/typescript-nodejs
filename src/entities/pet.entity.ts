@@ -13,4 +13,10 @@ export class Pet {
   birthDate!: Date;
   @Column({ type: 'boolean' })
   adopted!: boolean;
+
+  constructor(obj?: Partial<Pet>) {
+    if (obj && Object.keys(obj).length > 0) {
+      Object.assign(this, obj);
+    }
+  }
 }

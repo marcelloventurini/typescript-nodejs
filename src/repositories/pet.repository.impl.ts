@@ -21,8 +21,13 @@ export class PetRepositoryImpl implements PetRepository {
     await this.repository.save(pet);
   }
 
-  async updatePet(id: number, pet: Pet): Promise<void> {
-    await this.repository.update(id, pet);
+  async updatePet(id: number, newData: Partial<Pet>): Promise<Pet> {
+    const pet = await this.repository.findOneBy({ id });
+    if (!pet) {
+      throw new Error('Pet não encontrado.');
+    }
+    Object.assign(pet, newData);
+    return await this.repository.save(pet);
   }
 
   async deletePet(id: number): Promise<void> {

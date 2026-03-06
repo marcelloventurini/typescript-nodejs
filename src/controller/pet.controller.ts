@@ -38,35 +38,28 @@ export default class PetController {
       return res.status(400).json({ message: 'espécie inválida' });
     }
 
-    const newPet = new Pet();
-    newPet.id = generateId();
-    newPet.name = name;
-    newPet.birthDate = birthDate;
-    newPet.species = species;
-    newPet.adopted = adopted;
-
+    const newPet = new Pet({ name, birthDate, species, adopted });
     await this.repository.createPet(newPet);
 
     return res.status(201).json(newPet);
   }
 
-  async updatePet(req: Request<{ id: string }, {}, Pet>, res: Response) {
-    const { id } = req.params;
-    const { name, birthDate, species, adopted } = req.body;
-    const pet = await this.repository.getPetById(Number(id));
+  async updatePet(
+    req: Request<{ id: string }, {}, Partial<Pet>>,
+    res: Response,
+  ) {
+    try {
+      const { id } = req.params;
+      const updatedPet = await this.repository.updatePet(Number(id), req.body);
 
-    if (!pet) {
-      return res.status(404).json({ message: 'pet não encontrado' });
+      return res.status(200).json(updatedPet);
+    } catch (error: any) {
+      if (error.message === 'Pet não encontrado.') {
+        return res.status(404).json({ message: error.message });
+      }
+
+      return res.status(500).json({ message: 'Erro ao atualizar pet' });
     }
-
-    pet.name = name;
-    pet.birthDate = birthDate;
-    pet.species = species;
-    pet.adopted = adopted;
-
-    await this.repository.updatePet(Number(id), pet);
-
-    return res.status(200).json(pet);
   }
 
   async deletePet(req: Request<{ id: string }>, res: Response) {
