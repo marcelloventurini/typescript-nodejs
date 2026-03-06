@@ -1,6 +1,5 @@
 import type { Request, Response } from 'express';
 import { Pet } from '../entities/pet.entity.js';
-import SpeciesEnum from '../enums/species.enum.js';
 import { PetRepository } from '../repositories/pet.repository.js';
 
 export default class PetController {
@@ -23,16 +22,19 @@ export default class PetController {
   }
 
   async createPet(req: Request<{}, {}, Pet>, res: Response) {
-    const { name, birthDate, species, adopted } = req.body;
+    try {
+      const { name, birthDate, species, adopted } = req.body;
+      const newPet = new Pet({ name, birthDate, species, adopted });
+      await this.repository.createPet(newPet);
 
-    if (!Object.values(SpeciesEnum).includes(species)) {
-      return res.status(400).json({ message: 'espécie inválida' });
+      return res.status(201).json(newPet);
+    } catch (error: any) {
+      if (error.message === 'Espécie inválida.') {
+        return res.status(400).json({ message: error.message });
+      }
+
+      return res.status(500).json({ message: 'Erro ao criar pet' });
     }
-
-    const newPet = new Pet({ name, birthDate, species, adopted });
-    await this.repository.createPet(newPet);
-
-    return res.status(201).json(newPet);
   }
 
   async updatePet(

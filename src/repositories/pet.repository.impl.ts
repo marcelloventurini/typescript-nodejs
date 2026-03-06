@@ -1,5 +1,6 @@
 import { Repository } from 'typeorm';
 import { Pet } from '../entities/pet.entity.js';
+import SpeciesEnum from '../enums/species.enum.js';
 import { PetRepository } from './pet.repository.js';
 
 export class PetRepositoryImpl implements PetRepository {
@@ -18,6 +19,10 @@ export class PetRepositoryImpl implements PetRepository {
   }
 
   async createPet(pet: Pet): Promise<void> {
+    if (!Object.values(SpeciesEnum).includes(pet.species)) {
+      throw new Error('Espécie inválida.');
+    }
+
     await this.repository.save(pet);
   }
 
