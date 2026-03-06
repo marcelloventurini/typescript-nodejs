@@ -2,15 +2,6 @@ import type { Request, Response } from 'express';
 import { Pet } from '../entities/pet.entity.js';
 import SpeciesEnum from '../enums/species.enum.js';
 import { PetRepository } from '../repositories/pet.repository.js';
-// import type PetType from '../types/pet.type.js';
-
-// const petList: PetType[] = [];
-
-let id = 0;
-function generateId() {
-  id += 1;
-  return id;
-}
 
 export default class PetController {
   constructor(private repository: PetRepository) {}
