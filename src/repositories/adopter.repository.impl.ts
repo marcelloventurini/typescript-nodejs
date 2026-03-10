@@ -10,7 +10,7 @@ export class AdopterRepositoryImpl implements AdopterRepository {
   }
   
   getAdopters(): Promise<Adopter[]> {
-    throw new Error('Method not implemented.');
+    return this.repository.find();
   }
 
   getAdopterById(id: number): Promise<Adopter | null> {
