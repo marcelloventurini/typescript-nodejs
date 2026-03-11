@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { Adopter } from '../entities/adopter.entity.js';
 import { AdopterRepository } from '../repositories/adopter.repository.js';
 
 export class AdopterController {
@@ -18,5 +19,17 @@ export class AdopterController {
     }
 
     return res.status(200).json(adopter);
+  }
+
+  async createAdopter(req: Request<{}, {}, Adopter>, res: Response) {
+    try {
+      const { name, password, phone, photo, address } = req.body;
+      const newAdopter = new Adopter({ name, password, phone, photo, address });
+      await this.repository.createAdopter(newAdopter);
+
+      return res.status(201).json(newAdopter);
+    } catch (error) {
+      return res.status(400).json({ message: 'Erro ao criar adotante' });
+    }
   }
 }

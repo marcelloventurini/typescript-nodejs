@@ -17,8 +17,8 @@ export class AdopterRepositoryImpl implements AdopterRepository {
     return await this.repository.findOneBy({ id });
   }
 
-  createAdopter(adopter: Adopter): Promise<void> {
-    throw new Error('Method not implemented.');
+  async createAdopter(adopter: Adopter): Promise<void> {
+    await this.repository.save(adopter);
   }
 
   updateAdopter(id: number, newData: Partial<Adopter>): Promise<Adopter> {
