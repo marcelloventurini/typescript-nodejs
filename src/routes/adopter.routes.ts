@@ -10,5 +10,6 @@ const adopterController = new AdopterController(adopterRepository);
 const router = express.Router();
 
 router.get('/adopters', (req, res) => adopterController.getAdopters(req, res));
+router.get('/adopters/:id', (req, res) => adopterController.getAdopterById(req, res));
 
 export default router;

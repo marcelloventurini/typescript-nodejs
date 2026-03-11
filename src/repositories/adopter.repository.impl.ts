@@ -13,8 +13,8 @@ export class AdopterRepositoryImpl implements AdopterRepository {
     return await this.repository.find();
   }
 
-  getAdopterById(id: number): Promise<Adopter | null> {
-    throw new Error('Method not implemented.');
+  async getAdopterById(id: number): Promise<Adopter | null> {
+    return await this.repository.findOneBy({ id });
   }
 
   createAdopter(adopter: Adopter): Promise<void> {
