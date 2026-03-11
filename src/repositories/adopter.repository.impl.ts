@@ -9,8 +9,8 @@ export class AdopterRepositoryImpl implements AdopterRepository {
     this.repository = repository;
   }
   
-  getAdopters(): Promise<Adopter[]> {
-    return this.repository.find();
+  async getAdopters(): Promise<Adopter[]> {
+    return await this.repository.find();
   }
 
   getAdopterById(id: number): Promise<Adopter | null> {
