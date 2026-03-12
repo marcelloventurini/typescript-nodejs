@@ -56,14 +56,17 @@ export default class PetController {
   }
 
   async deletePet(req: Request<{ id: string }>, res: Response) {
-    const { id } = req.params;
-    const pet = await this.repository.getPetById(Number(id));
+    try {
+      const { id } = req.params;
 
-    if (!pet) {
-      return res.status(404).json({ message: 'pet não encontrado' });
+      await this.repository.deletePet(Number(id));
+      return res.status(200).json({ message: 'pet deletado com sucesso' });
+    } catch (error: any) {
+      if (error.message === 'Pet não encontrado.') {
+        return res.status(404).json({ message: error.message });
+      }
+
+      return res.status(500).json({ message: 'Erro ao deletar pet' });
     }
-
-    await this.repository.deletePet(Number(id));
-    return res.status(200).json({ message: 'pet deletado com sucesso' });
   }
 }

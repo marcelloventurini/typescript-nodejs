@@ -36,6 +36,12 @@ export class PetRepositoryImpl implements PetRepository {
   }
 
   async deletePet(id: number): Promise<void> {
-    await this.repository.delete(id);
+    const pet = await this.repository.findOneBy({ id });
+
+    if (!pet) {
+      throw new Error('Pet não encontrado.');
+    }
+
+    await this.repository.remove(pet);
   }
 }
