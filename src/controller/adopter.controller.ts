@@ -32,4 +32,25 @@ export class AdopterController {
       return res.status(400).json({ message: 'Erro ao criar adotante' });
     }
   }
+
+  async updateAdopter(
+    req: Request<{ id: string }, {}, Partial<Adopter>>,
+    res: Response,
+  ) {
+    try {
+      const { id } = req.params;
+      const updatedAdopter = await this.repository.updateAdopter(
+        Number(id),
+        req.body,
+      );
+
+      return res.status(200).json(updatedAdopter);
+    } catch (error: any) {
+      if (error.message === 'Adotante não encontrado.') {
+        return res.status(404).json({ message: error.message });
+      }
+
+      return res.status(500).json({ message: 'Erro ao atualizar adotante' });
+    }
+  }
 }
