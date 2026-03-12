@@ -23,7 +23,7 @@ export class AdopterRepositoryImpl implements AdopterRepository {
 
   async updateAdopter(id: number, newData: Partial<Adopter>): Promise<Adopter> {
     const adopter = await this.repository.findOneBy({ id });
-    
+
     if (!adopter) {
       throw new Error('Adotante não encontrado.');
     }
@@ -32,7 +32,13 @@ export class AdopterRepositoryImpl implements AdopterRepository {
     return await this.repository.save(adopter);
   }
 
-  deleteAdopter(id: number): Promise<void> {
-    throw new Error('Method not implemented.');
+  async deleteAdopter(id: number): Promise<void> {
+    const adopter = await this.repository.findOneBy({ id });
+
+    if (!adopter) {
+      throw new Error('Adotante não encontrado.');
+    }
+
+    await this.repository.remove(adopter);
   }
 }

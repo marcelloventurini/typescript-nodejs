@@ -53,4 +53,19 @@ export class AdopterController {
       return res.status(500).json({ message: 'Erro ao atualizar adotante' });
     }
   }
+
+  async deleteAdopter(req: Request<{ id: string }>, res: Response) {
+    try {
+      const { id } = req.params;
+      
+      await this.repository.deleteAdopter(Number(id));
+      return res.status(200).json({ message: 'Adotante deletado com sucesso' });
+    } catch (error: any) {
+      if (error.message === 'Adotante não encontrado.') {
+        return res.status(404).json({ message: error.message });
+      }
+
+      return res.status(500).json({ message: 'Erro ao deletar adotante' });
+    }
+  }
 }
