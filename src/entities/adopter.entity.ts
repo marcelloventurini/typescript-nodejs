@@ -10,10 +10,10 @@ export class Adopter {
   password!: string;
   @Column({ type: 'varchar' })
   phone!: string;
-  @Column({ type: 'varchar' })
-  photo!: string;
-  @Column({ type: 'varchar' })
-  address!: string;
+  @Column({ type: 'varchar', nullable: true })
+  photo?: string | undefined;
+  @Column({ type: 'varchar', nullable: true })
+  address?: string | undefined;
 
   constructor(obj?: Partial<Adopter>) {
     if (obj && Object.keys(obj).length > 0) {

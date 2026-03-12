@@ -57,7 +57,7 @@ export class AdopterController {
   async deleteAdopter(req: Request<{ id: string }>, res: Response) {
     try {
       const { id } = req.params;
-      
+
       await this.repository.deleteAdopter(Number(id));
       return res.status(200).json({ message: 'Adotante deletado com sucesso' });
     } catch (error: any) {
