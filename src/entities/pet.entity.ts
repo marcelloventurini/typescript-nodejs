@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import SpeciesEnum from '../enums/species.enum.js';
+import { Adopter } from './adopter.entity.js';
 
 @Entity()
 export class Pet {
@@ -13,6 +14,8 @@ export class Pet {
   birthDate!: Date;
   @Column({ type: 'boolean' })
   adopted!: boolean;
+  @ManyToOne(() => Adopter, (adopter) => adopter.pet)
+  adopter!: Adopter;
 
   constructor(obj?: Partial<Pet>) {
     if (obj && Object.keys(obj).length > 0) {

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Pet } from './pet.entity.js';
 
 @Entity()
 export class Adopter {
@@ -14,6 +15,8 @@ export class Adopter {
   photo?: string | undefined;
   @Column({ type: 'varchar', nullable: true })
   address?: string | undefined;
+  @OneToMany(() => Pet, (pet) => pet.adopter)
+  pet!: Pet[];
 
   constructor(obj?: Partial<Adopter>) {
     if (obj && Object.keys(obj).length > 0) {
