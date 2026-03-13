@@ -6,4 +6,5 @@ export interface PetRepository {
   createPet(pet: Pet): Promise<void>;
   updatePet(id: number, newData: Partial<Pet>): Promise<Pet>;
   deletePet(id: number): Promise<void>;
+  adoptPet(id: number, adopterId: number): Promise<Pet>;
 }

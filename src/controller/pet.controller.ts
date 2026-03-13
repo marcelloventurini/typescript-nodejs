@@ -69,4 +69,26 @@ export default class PetController {
       return res.status(500).json({ message: 'Erro ao deletar pet' });
     }
   }
+
+  async adoptPet(
+    req: Request<{ petId: string }, {}, { adopterId: number }>,
+    res: Response,
+  ) {
+    try {
+      const { petId } = req.params;
+      const { adopterId } = req.body;
+
+      const adoptedPet = await this.repository.adoptPet(
+        Number(petId),
+        adopterId,
+      );
+      return res.status(200).json(adoptedPet);
+    } catch (error: any) {
+      if (error.message.includes('não encontrado')) {
+        return res.status(404).json({ message: error.message });
+      }
+
+      return res.status(500).json({ message: 'Erro ao adotar pet' });
+    }
+  }
 }
